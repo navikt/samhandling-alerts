@@ -13,9 +13,11 @@ spec:
       expr: up{app=~"pip-tpforhold",job="kubernetes-pods"} == 0
       for: 2m
       description: "{{ $labels.app }} er nede i {{ $labels.kubernetes_namespace }}"
+      action: Feilsøk årsaken
       severity: critical
-  - alert: Database feil
+    - alert: Database feil
       expr: increase(tpforhold_db_error_counter_total{app=~"pip-tpforhold",job="kubernetes-pods"}[5m]) > 0
       for: 2m
       description: "{{ $labels.app }} i {{ $labels.kubernetes_namespace }} får feil mot databasen"
+      action: Feilsøk årsaken og sjekk credentials
       severity: warning
