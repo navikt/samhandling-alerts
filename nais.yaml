@@ -1,0 +1,21 @@
+apiVersion: nais.io/v1alpha1
+kind: Alert
+metadata:
+  name: peon-alerts
+  labels:
+    team: teampeon
+spec:
+  receivers:
+    slack:
+      channel: '#peon-alerts'
+  alerts:
+    - alert: App nede
+      expr: up{app=~"pip-tpforhold",job="kubernetes-pods"} == 0
+      for: 2m
+      description: "{{ $labels.app }} er nede i {{ $labels.kubernetes_namespace }}"
+      severity: critical
+  - alert: Database feil
+      expr: increase(tpforhold_db_error_counter_total{app=~"pip-tpforhold",job="kubernetes-pods"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }} i {{ $labels.kubernetes_namespace }} får feil mot databasen"
+      severity: warning
