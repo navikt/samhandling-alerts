@@ -9,15 +9,16 @@ spec:
     slack:
       channel: '#peon-alerts'
   alerts:
+    # PIP Tp-forhold
     - alert: App nede
-      expr: up{app=~"pip-tpforhold",job="kubernetes-pods"} == 0
-      for: 2m
+      expr: up{app=~"pip-tpforhold|samordning-hendelse-api|samordning-hendelse-innlasting",job="kubernetes-pods"} == 0
+      for: 5m
       description: "{{ $labels.app }} er nede i {{ $labels.kubernetes_namespace }}"
       action: Feilsøk årsaken
-      severity: critical
+      severity: danger
     - alert: Database feil
       expr: increase(tpforhold_db_error_counter_total{app=~"pip-tpforhold",job="kubernetes-pods"}[5m]) > 0
-      for: 2m
+      for: 5m
       description: "{{ $labels.app }} i {{ $labels.kubernetes_namespace }} får feil mot databasen"
       action: Feilsøk årsaken og sjekk credentials
       severity: warning
