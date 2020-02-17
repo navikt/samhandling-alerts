@@ -11,7 +11,7 @@ spec:
   alerts:
     # PIP Tp-forhold
     - alert: App nede
-      expr: up{app=~"pip-tpforhold|samordning-hendelse-api|samordning-hendelse-innlasting",job="kubernetes-pods"} == 0
+      expr: up{app=~"peproxy|pip-tpforhold|tpregisteret|tjenestepensjon-simulering|tpconfig|samordning-inn|samordning-ut|dsop-ufo|pensr|pen-kafka-integration|samordning-hendelse-api|samordning-hendelse-innlasting",job="black box scraping of ingresses"} == 0
       for: 5m
       description: "{{ $labels.app }} er nede i {{ $labels.kubernetes_namespace }}"
       action: Feilsøk årsaken
