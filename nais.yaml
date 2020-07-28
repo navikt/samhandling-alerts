@@ -1,14 +1,14 @@
 apiVersion: nais.io/v1
 kind: Alert
 metadata:
-  name: peon-alerts
+  name: samhandling-alerts
   namespace: default
   labels:
-    team: teampeon
+    team: pensjonsamhandling
 spec:
   receivers:
     slack:
-      channel: '#peon-alerts'
+      channel: '#samhandling-alerts'
   alerts:
     - alert: App nede
       expr: up{app=~"peproxy|pip-tpforhold|tpregisteret|tjenestepensjon-simulering|tpconfig|samordning-ereg|samordning-inn|samordning-ut|dsop-ufo|pensr|pen-kafka-integration|samordning-hendelse-api|samordning-hendelse-innlasting",job="black box scraping of ingresses"} == 0
