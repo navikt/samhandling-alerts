@@ -11,7 +11,7 @@ spec:
       channel: '#samhandling-alerts'
   alerts:
     - alert: App nede
-      expr: up{app=~"peproxy|pip-tpforhold|tpregisteret|tjenestepensjon-simulering|tpconfig|samordning-ereg|samordning-inn|samordning-ut|dsop-ufo|pensr|pen-kafka-integration|samordning-hendelse-api|samordning-hendelse-innlasting",job="black box scraping of ingresses"} == 0
+      expr: up{app=~"peproxy|pensjon-sporingslogg-integrasjon|pip-tpforhold|tpregisteret|tjenestepensjon-simulering|tpconfig|samordning-ereg|samordning-inn|samordning-ut|dsop-ufo|pensr|pen-kafka-integration|samordning-hendelse-api|samordning-hendelse-innlasting",job="black box scraping of ingresses"} == 0
       for: 5m
       description: "{{ $labels.app }} er nede i {{ $labels.kubernetes_namespace }}"
       action: Feilsøk årsaken
