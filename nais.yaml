@@ -22,3 +22,39 @@ spec:
       description: "{{ $labels.app }} i {{ $labels.kubernetes_namespace }} får feil mot databasen"
       action: Feilsøk årsaken og sjekk credentials
       severity: warning
+    - alert: Samordning-inn SOAP-kall feil
+      expr: increase(counter_soap_fault_samordningsdata_generisk{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Samordningsdata - Generik SOAP feil"
+      action: Undersøk feilen
+      severity: warning
+    - alert: Samordningsdata - Generisk SOAP fault
+      expr: increase(counter_soap_fault_samordningsdata_generisk{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk feil mot Samordningsdata"
+      action: Undersøk feilen
+      severity: warning
+    - alert: Samordningsdata - Sikkerhetsfeil
+      expr: increase(counter_soap_fault_samordningsdata_sikkerhet{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Sikkerhetsfeil mot Samordningsdata"
+      action: Undersøk om det er feiler på vår side
+      severity: warning
+    - alert: LagreTPYtelse - Sikkerhetsfeil
+      expr: increase(counter_soap_fault_lagretpforhold_sikkerhet{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Sikkerhetsfeil mot LagreTPYtelse"
+      action: Undersøk om det er feiler på vår side
+      severity: warning
+    - alert: LagreTPYtelse - Generisk SOAP fault
+      expr: increase(counter_soap_fault_lagretpforhold_generisk{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk feil mot LagreTPYtelse"
+      action: Undersøk feilen
+      severity: warning
+    - alert: VarsleSamordning - Generisk SOAP fault
+      expr: increase(counter_soap_fault_varslesamordning_generisk{app=~"samordning-ut",job="kubernetes-pods"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk feil mot VarsleSamordning"
+      action: Undersøk feilen
+      severity: warning
