@@ -56,9 +56,3 @@ spec:
       action: Undersøk feilen i loggene - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
       severity: danger
 
-    - alert: LagreTPYtelse
-      expr: increase(counter_soap_fault_lagretpforhold_tpforholdallerederegistrert{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
-      for: 2m
-      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): TpForhold allerede registrert"
-      action: Se årsak - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
-      severity: warning
