@@ -14,37 +14,41 @@ spec:
       expr: up{app=~"samordning-inn",job="black box scraping of ingresses"} == 0
       for: 5m
       description: "{{ $labels.app }} er nede i {{ $labels.kubernetes_namespace }}"
-      action: Feilsøk årsaken
+      action: Sjekk logger i Q1 her - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
       severity: danger
+
     - alert: Samordning-inn SOAP-kall feil
       expr: increase(counter_soap_fault_samordningsdata_generisk{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
       for: 2m
-      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Samordningsdata - Generik SOAP feil"
-      action: Undersøk feilen
-      severity: warning
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Samordningsdata - Generisk SOAP feil"
+      action: Undersøk feilen i loggene - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
+      severity: danger
+
     - alert: Samordningsdata - Generisk SOAP fault
       expr: increase(counter_soap_fault_samordningsdata_generisk{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
       for: 2m
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk feil mot Samordningsdata"
-      action: Undersøk feilen
-      severity: warning
+      action: Undersøk feilen i loggene - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
+      severity: danger
+
     - alert: Samordningsdata - Sikkerhetsfeil
       expr: increase(counter_soap_fault_samordningsdata_sikkerhet{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
       for: 2m
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Sikkerhetsfeil mot Samordningsdata"
-      action: Undersøk om det er feiler på vår side
-      severity: warning
+      action: Undersøk om det er feiler på vår side - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
+      severity: danger
+
     - alert: LagreTPYtelse - Sikkerhetsfeil
       expr: increase(counter_soap_fault_lagretpforhold_sikkerhet{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
       for: 2m
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Sikkerhetsfeil mot LagreTPYtelse"
-      action: Undersøk om det er feiler på vår side
-      severity: warning
+      action: Undersøk om det er feiler på vår side - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
+      severity: danger
+
     - alert: LagreTPYtelse - Generisk SOAP fault
       expr: increase(counter_soap_fault_lagretpforhold_generisk{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
       for: 2m
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk feil mot LagreTPYtelse"
-      action: Undersøk feilen
-      severity: warning
-
+      action: Undersøk feilen i loggene - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
+      severity: danger
 
