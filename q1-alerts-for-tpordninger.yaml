@@ -11,7 +11,7 @@ spec:
       channel: '#testmiljø-tjenestepensjon'
   alerts:
     - alert: App nede
-      expr: up{app=~"samordning-inn|samordning-ut",job="black box scraping of ingresses"} == 0
+      expr: up{app=~"samordning-inn",job="black box scraping of ingresses"} == 0
       for: 5m
       description: "{{ $labels.app }} er nede i {{ $labels.kubernetes_namespace }}"
       action: Feilsøk årsaken
@@ -46,9 +46,5 @@ spec:
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk feil mot LagreTPYtelse"
       action: Undersøk feilen
       severity: warning
-    - alert: VarsleSamordning - Generisk SOAP fault
-      expr: increase(counter_soap_fault_varslesamordning_generisk{app=~"samordning-ut",job="kubernetes-pods"}[5m]) > 0
-      for: 2m
-      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk feil mot VarsleSamordning"
-      action: Undersøk feilen
-      severity: warning
+
+
