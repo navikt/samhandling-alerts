@@ -11,7 +11,7 @@ spec:
       channel: '#testmiljø-tjenestepensjon'
   alerts:
     - alert: App nede
-      expr: up{app=~"samordning-inn",job="black box scraping of ingresses"} == 0
+      expr: up{app=~"samordning-inn|tpregisteret",job="black box scraping of ingresses"} == 0
       for: 5m
       description: "{{ $labels.app }} er nede i {{ $labels.kubernetes_namespace }}"
       action: Sjekk logger i Q1 her - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
@@ -32,13 +32,6 @@ spec:
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk SOAP fault mot Samordningsdata"
       action: Undersøk feilen i loggene - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
       severity: danger
-
-    - alert: Samordningsdata
-      expr: increase(counter_soap_fault_samordningsdata_tpforholdikkeiverksatt{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
-      for: 2m
-      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): TpForhold ikke iverksatt"
-      action: Se årsak - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
-      severity: warning
 
 
 
