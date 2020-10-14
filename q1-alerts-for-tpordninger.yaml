@@ -49,3 +49,18 @@ spec:
       action: Undersøk feilen i loggene - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
       severity: danger
 
+
+
+    - alert: Tpregisteret
+      expr: increase(http_server_requests_seconds_count{app="tpregisteret",uri="/person/forhold",status="401"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Unauthorized mot person/forhold"
+      action: Undersøk feilen i loggene - https://logs.adeo.no/goto/bf84929ab5d736a1f6fbcaeccbabaf48
+      severity: warning
+
+    - alert: Tpregisteret
+      expr: increase(http_server_requests_seconds_count{app="tpregisteret",uri="/person/forhold",status="500"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Internal server error i person/forhold"
+      action: Undersøk feilen i loggene - https://logs.adeo.no/goto/bf84929ab5d736a1f6fbcaeccbabaf48
+      severity: danger
