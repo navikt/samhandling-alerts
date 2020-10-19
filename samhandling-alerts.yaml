@@ -16,45 +16,71 @@ spec:
       description: "{{ $labels.app }} er nede i {{ $labels.kubernetes_namespace }}"
       action: Feilsøk årsaken
       severity: danger
-    - alert: Database feil
+
+
+
+    - alert: Pip-tpforhold
       expr: increase(tpforhold_db_error_counter_total{app=~"pip-tpforhold",job="kubernetes-pods"}[5m]) > 0
       for: 5m
       description: "{{ $labels.app }} i {{ $labels.kubernetes_namespace }} får feil mot databasen"
       action: Feilsøk årsaken og sjekk credentials
       severity: warning
-    - alert: Samordning-inn SOAP-kall feil
-      expr: increase(counter_soap_fault_samordningsdata_generisk{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
-      for: 2m
-      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Samordningsdata - Generik SOAP feil"
-      action: Undersøk feilen
-      severity: warning
-    - alert: Samordningsdata - Generisk SOAP fault
+
+
+
+    - alert: Samordningsdata
       expr: increase(counter_soap_fault_samordningsdata_generisk{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
       for: 2m
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk feil mot Samordningsdata"
-      action: Undersøk feilen
+      action: Undersøk feilen i loggene - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
       severity: warning
-    - alert: Samordningsdata - Sikkerhetsfeil
+
+    - alert: Samordningsdata
       expr: increase(counter_soap_fault_samordningsdata_sikkerhet{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
       for: 2m
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Sikkerhetsfeil mot Samordningsdata"
-      action: Undersøk om det er feiler på vår side
+      action: Undersøk feilen i loggene - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
       severity: warning
-    - alert: LagreTPYtelse - Sikkerhetsfeil
+
+
+
+    - alert: LagreTPYtelse
       expr: increase(counter_soap_fault_lagretpforhold_sikkerhet{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
       for: 2m
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Sikkerhetsfeil mot LagreTPYtelse"
-      action: Undersøk om det er feiler på vår side
+      action: Undersøk om det er feiler på vår side - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
       severity: warning
-    - alert: LagreTPYtelse - Generisk SOAP fault
+
+    - alert: LagreTPYtelse
       expr: increase(counter_soap_fault_lagretpforhold_generisk{app=~"samordning-inn",job="kubernetes-pods"}[5m]) > 0
       for: 2m
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk feil mot LagreTPYtelse"
-      action: Undersøk feilen
+      action: Undersøk feilen - https://logs.adeo.no/goto/df6e36529831a8f79533b296c2741efc
       severity: warning
-    - alert: VarsleSamordning - Generisk SOAP fault
+
+
+
+    - alert: VarsleSamordning
       expr: increase(counter_soap_fault_varslesamordning_generisk{app=~"samordning-ut",job="kubernetes-pods"}[5m]) > 0
       for: 2m
       description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Generisk feil mot VarsleSamordning"
       action: Undersøk feilen
       severity: warning
+
+
+
+    - alert: Tpregisteret
+      expr: increase(http_server_requests_seconds_count{app="tpregisteret",uri="/person/forhold",status="401"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Unauthorized mot person/forhold"
+      action: Undersøk feilen i loggene - https://logs.adeo.no/goto/bf84929ab5d736a1f6fbcaeccbabaf48
+      severity: warning
+
+    - alert: Tpregisteret
+      expr: increase(http_server_requests_seconds_count{app="tpregisteret",uri="/person/forhold",status="500"}[5m]) > 0
+      for: 2m
+      description: "{{ $labels.app }}({{ $labels.kubernetes_namespace }}): Internal server error i person/forhold"
+      action: Undersøk feilen i loggene - https://logs.adeo.no/goto/bf84929ab5d736a1f6fbcaeccbabaf48
+      severity: danger
+
+
