@@ -2,7 +2,7 @@ apiVersion: nais.io/v1
 kind: Alert
 metadata:
   name: q1-alerts-for-tpordninger
-  namespace: default
+  namespace: pensjonsamhandling
   labels:
     team: pensjonsamhandling
 spec:
